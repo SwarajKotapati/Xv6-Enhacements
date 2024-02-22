@@ -1,3 +1,29 @@
+# Section 1: Bootloader Development
+
+## Objective
+The initial section focuses on understanding the boot process and custom bootloader development in the xv6 operating system. Through a step-by-step approach, the bootloader is crafted, incorporating essential elements such as linker scripts, stack setup, dynamic kernel loading, and RISC-V Physical Memory Protection (PMP). The assignment delves into the intricacies of boot ROM execution, ensuring a robust foundation for subsequent enhancements.
+
+## Task Breakdowns
+
+### Inspecting QEMU Boot ROM Execution
+This phase involved leveraging GDB for a comprehensive analysis of the Boot ROM execution. By executing `./run gdb` to run xv6 in debug mode and launching `riscv64-unknown-elf-gdb` in a separate terminal window, we aimed to identify the loading address, meticulously scrutinize execution steps, and determine the final jump address after execution.
+
+### Writing a Bootloader Linker Script and Booting into Assembly
+The subsequent step focused on defining a robust linker descriptor in `bootloader/bootloader.ld`. This descriptor specified the starting address and meticulously organized bootloader sections such as `.text`, `.data`, `.rodata`, and `.bss`. Additionally, we set up the entry function and confirmed correct execution by verifying the bootloader’s entry function using GDB.
+
+### Setting Up a Stack for C Code
+To facilitate seamless execution of C code, we configured a stack. The stack address was loaded into the stack pointer register to ensure the proper execution of C functions after entry.
+
+### Loading User-Selected OS Kernels
+Functionality was implemented to dynamically load various OS kernels. This involved determining the kernel load address using ELF headers, copying the kernel binary to the specified address (`kernload-start`), executing the OS kernel, and passing essential system information.
+
+### Setting Up the RISC-V PMP Feature
+The focus shifted to configuring RISC-V Physical Memory Protection (PMP) to enable memory access at S-mode. TOR and NAPOT configurations were implemented to effectively isolate memory regions and govern access. The TOR configuration isolated the upper 11 MBs, while the NAPOT configuration isolated regions 118-120 MB and 122-126 MB.
+
+### Enabling Secure Boot
+Secure boot functionality was integrated to ensure the integrity of the loaded kernel. In the event of tampering detection, the system initiated the loading of a recovery kernel. The validation process included SHA-256 hash checks for the integrity of the loaded kernel.
+
+
 xv6 is a re-implementation of Dennis Ritchie's and Ken Thompson's Unix
 Version 6 (v6).  xv6 loosely follows the structure and style of v6,
 but is implemented for a modern RISC-V multiprocessor using ANSI C.
