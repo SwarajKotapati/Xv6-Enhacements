@@ -1,3 +1,45 @@
+# Section 4: Trap and Emulate Virtualization
+
+## Objective
+The final section explores trap and emulate virtualization, offering a unique approach to designing a virtual machine (VM) within the xv6 framework. The VM runs as a user-mode process, while privileged instructions trap to a virtual machine monitor (VMM). Tasks include initializing and maintaining the VM’s privileged state, redirecting traps, decoding and emulating trapped privileged instructions, and emulating physical memory protection (PMP). This assignment extends the capabilities of xv6 into the realm of virtualization.
+
+## Task Breakdowns
+
+### Privileged Virtual Machine State Initialization
+- To facilitate privileged state tracking, an initialization process creates and maintains a data structure.
+- This structure includes registers like machine trap handling, setup trap, information state, physical memory protection, satp, and execution mode.
+- All registers are initialized, with special attention to the `mvendorid` register, which is set to the hexadecimal code ”cse536.”
+- Additionally, different VM execution modes are defined here.
+
+### Track Virtual Machine Execution and Redirect Traps
+- VM processes are identified by their names starting with ”vm-.”
+- The VMM tracks these processes and redirects user traps raised for privileged instructions to the `trap_and_emulate()` function, as defined in trap-and-emulate.c.
+- Notably, this redirection includes handling traps for the `ecall` instruction.
+
+### Decode Trapped Privileged Instruction
+- Upon trapping privileged instructions, the VMM decodes them to enable subsequent emulation.
+- The decoding process involves extracting the opcode of the instruction (`op`), identifying source registers (`src1` and `src2`), and determining the destination register (`dst`).
+- A crucial part of this decoding is the mapping between register codes and the actual source and destination registers.
+
+### Emulate Decoded Instructions
+- Following the decoding of privileged instructions (`csrr`, `csrw`, `sret`, `mret`, `ecall`), the VMM proceeds to emulate their operation in software.
+- Specific descriptions for each instruction are provided:
+  - `csrr`: Moves the value from a privileged register to an unprivileged register.
+  - `csrw`: Moves the value from an unprivileged register to a privileged register.
+  - `sret`: Transfers control from S-mode to U-mode entry point.
+  - `mret`: Transfers control from M-mode to S-mode entry point.
+  - `ecall`: Transfers control from U-mode to S-mode or M-mode, also transferring control from S-mode to M-mode.
+- Additionally, the VM is shut down if `0x0` is written to `mvendorid`.
+
+### Emulating Physical Memory Protection (PMP)
+- To emulate PMP without paging, the VMM performs three sub-tasks.
+  - Firstly, it creates a copy of the VM process’ page tables for U/S-mode execution.
+  - Secondly, on the newly-created page tables (referred to as PMP tables), the VMM unmaps regions of memory that are inaccessible based on PMP registers.
+  - Thirdly, when the VM transitions into U/S-mode (e.g., using `sret`), the VMM switches the VM process’ page tables to the PMP tables.
+- The assumption is made that a 4MB memory region from `0x80000000` to `0x80400000` is available for PMP.
+
+
+
 xv6 is a re-implementation of Dennis Ritchie's and Ken Thompson's Unix
 Version 6 (v6).  xv6 loosely follows the structure and style of v6,
 but is implemented for a modern RISC-V multiprocessor using ANSI C.
