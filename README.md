@@ -1,4 +1,4 @@
-# Operating System Enhancements Portfolio
+# Operating System Enhancements 
 
 ### Abstract
 Operating systems are the linchpin between user applications and hardware, fulfilling critical roles in user interaction, application stability, and system optimization. This project portfolio, completed as part of an advanced operating systems course, delves into enhancing the xv6 operating system. Through a series of assignments, covering bootloader development to virtualization, this portfolio demonstrates a profound understanding of operating system internals, resulting in a more resilient and feature-rich xv6 operating system.
