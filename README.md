@@ -1,9 +1,5 @@
 # Operating System Enhancements Portfolio
 
-## Venkata Swaraj Kotapati
-- **Email:** vkotapat@asu.edu
-- **Arizona State University, Tempe, AZ**
-
 ### Abstract
 Operating systems are the linchpin between user applications and hardware, fulfilling critical roles in user interaction, application stability, and system optimization. This project portfolio, completed as part of an advanced operating systems course, delves into enhancing the xv6 operating system. Through a series of assignments, covering bootloader development to virtualization, this portfolio demonstrates a profound understanding of operating system internals, resulting in a more resilient and feature-rich xv6 operating system.
 
@@ -48,3 +44,6 @@ All sections were completed independently, showcasing a solo effort in design, c
 [2] A. Belay, "6.828: Using Virtual Memory," MIT.edu.
 [3] F. Embeddev, "RISC-V instruction set manual, volume I: RISC-V user-level ISA."
 [4] R. C. F. K. Morris, "xv6: a simple, Unix-like teaching operating system," MIT.edu.
+
+## Contact Information
+For any inquiries or issues, please contact [Venkata Swaraj Kotapati] at [kotapatiswaraj06@gmail.com].
