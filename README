@@ -1,3 +1,39 @@
+# Section 2: Memory Management Enhancement
+
+## Objective
+The second section introduces on-demand paging and copy-on-write mechanisms to xv6, enhancing memory management capabilities. Key tasks include enabling on-demand binary loading, designing a page fault handler, extending on-demand loading to heap memory, implementing page swapping to disk for heap memory, and introducing the Working Set Algorithm (WSA). These enhancements optimize memory usage and facilitate efficient page management.
+
+## Task Breakdowns
+
+### Enable On-Demand Binary Loading
+- Revamped process creation in xv6 by introducing on-demand loading of a program binary’s contents.
+- Identified on-demand processes, skipped program section loading, and updated print statements.
+- Tested by running `make qemu` and comparing outputs.
+
+### Design a Page Fault Handler
+- Implemented a page fault handler to load program binary contents on-demand.
+- Redirected page fault exceptions, found faulting page address, loaded program binary page from disk, and updated print statements.
+- Tested by running `echo Hello World` on the shell.
+
+### Enable On-Demand Heap Memory
+- Extended on-demand loading to heap memory.
+- Prevented heap page allocation, tracked heap pages, handled heap page faults, and updated print statements.
+
+### Implement Page Swapping to Disk for Heap
+- Implemented page swapping for heap memory using FIFO algorithm.
+- Tracked heap page load time, total resident heap pages, evicted victim page to free disk region, and retrieved swapped page from disk.
+
+### Implement the Working Set Algorithm
+- Replaced the FIFO page swap algorithm with the Working Set Algorithm (WSA).
+- Tested the algorithm robustly and uploaded test cases.
+
+### Implement Copy-On-Write (CoW) during Fork
+- Enhanced `fork()` with copy-on-write (CoW) optimization.
+- Implemented `uvmcopy_cow()`, called it in `fork()`, tracked shared pages in a CoW group, and enabled CoW in the page fault handler.
+
+
+
+
 xv6 is a re-implementation of Dennis Ritchie's and Ken Thompson's Unix
 Version 6 (v6).  xv6 loosely follows the structure and style of v6,
 but is implemented for a modern RISC-V multiprocessor using ANSI C.
