@@ -1,3 +1,52 @@
+Section 3 : The third section delves into user
+level thread management, adding a layer of sophistication to
+ process execution within xv6. By implementing user-level
+ threads, the assignment introduces a user-level threading
+ library (ULTLib) responsible for thread creation, switching,
+ yielding, and destruction. Various scheduling algorithms,
+ including round-robin, first-come-first-serve, and priority
+ scheduling, are incorporated, enhancing the multitasking
+ capabilities of the operating system. Following are the task
+ breakdowns for this assignment.
+ User-Level
+ Threading
+ Library
+ (ULTLib)Library
+ Initialization: Upon initialization, a data structure (similar to
+ proc in the kernel) is created to track each user-level thread.
+ Assigned the first kernel-provided thread as the user-level
+ scheduler thread within this structure. Implemented this
+ initialization in the ulthread init() function.
+ Thread Creation : To create a thread, the starting function
+ address, initial arguments, stack location, thread priority, and
+ a context save location is obtained from the user process
+ using ulthread create(). Created and maintained the context
+ save location in ULTLib. Updated the thread as RUNNABLE
+ for scheduling.
+ Thread Switch: The user-level scheduler thread is invoked
+ to schedule threads after creation and each time a user-level
+ thread yields its CPU. Implemented an assembly function to
+ save the current thread’s registers and load registers from the
+ next scheduled thread’s context. Initialized the registers for
+ correct function argument passing.
+ Thread Yield and Destroy : Implemented ulthread yield()
+ for a thread to give up its execution, asking the scheduler
+ to schedule a different thread. At the thread’s end,
+ ulthread destroy() is called to signal completion. Worked on
+ state changes to YIELD or FREE and perform necessary
+ housekeeping tasks before switching back to the scheduler.
+ Thread Scheduling Decisions : The user-level scheduler
+ thread determines which thread to schedule based on round
+robin, first-come-first-serve, or priority scheduling algorithms.
+ A scheduler is developed that is aware of these algorithms,
+ making decisions based on the specified policy during library
+ initialization.
+ Testing : Conducted testing for FCFS, Priority, and Round
+ Robin scheduling algorithms. Rigorous testing, including
+ corner situations, and designed additional test cases for
+ thorough validation.
+
+
 xv6 is a re-implementation of Dennis Ritchie's and Ken Thompson's Unix
 Version 6 (v6).  xv6 loosely follows the structure and style of v6,
 but is implemented for a modern RISC-V multiprocessor using ANSI C.
